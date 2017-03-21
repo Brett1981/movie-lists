@@ -40,6 +40,14 @@ namespace movie_lists {
     /// </summary>
     public partial class MainWindow : System.Windows.Window, System.Windows.Markup.IComponentConnector {
         
+        
+        #line 1 "..\..\MainWindow.xaml"
+        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        internal movie_lists.MainWindow MainWindow1;
+        
+        #line default
+        #line hidden
+        
         private bool _contentLoaded;
         
         /// <summary>
@@ -68,6 +76,12 @@ namespace movie_lists {
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
         void System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) {
+            switch (connectionId)
+            {
+            case 1:
+            this.MainWindow1 = ((movie_lists.MainWindow)(target));
+            return;
+            }
             this._contentLoaded = true;
         }
     }
