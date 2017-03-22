@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:movie_lists"
         mc:Ignorable="d"
-        Title="Movies" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Movie Search" Height="350" Width="525"
+        Padding="10">
+    <StackPanel x:Name="spMasterPanel">
+        <Label x:Name="lbQuery" Margin="10 0" Content="Enter query:" />
+        <TextBox x:Name="tbQuery" Padding="0 2" Margin="10 0"/>
+        <Button x:Name="btnSearch" Width="60" 
+                HorizontalAlignment="Left" Margin="10 5 5 5">
+            Search</Button>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Hidden" 
+                      Margin="15 5">
+            <Grid>
+                
+            </Grid>
+        </ScrollViewer>
+    </StackPanel>
 </Window>
