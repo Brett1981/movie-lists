@@ -38,16 +38,19 @@ namespace movie_lists
 
         void ButtonClick(object sender, RoutedEventArgs e)
         {
+            resultsGrid.Children.Clear();
             SearchContainer<SearchMovie> movies = QuerySearchMovie(tbQuery.Text);
             int count = 0;
             foreach( SearchMovie mov in movies.Results)
             {
                 StackPanel sp = new StackPanel();
+                sp.Background = Brushes.Beige;
                 resultsGrid.Children.Add(sp);
 
-                Label title = new Label();
-                title.Content = mov.Title;
+                TextBlock title = new TextBlock();
+                title.Text = mov.Title;
                 title.FontSize = 20d;
+                title.TextWrapping = TextWrapping.Wrap;
                 sp.Children.Add(title);
 
                 Label rDate = new Label();
@@ -67,8 +70,8 @@ namespace movie_lists
 
                 count++;
             }
-            resultsGrid.Rows = 1 + count / 2;
-            resultsGrid.Columns = 2;
+            resultsGrid.Rows = 1 + count / 3;
+            resultsGrid.Columns = 3;
         }
 
         static SearchContainer<SearchMovie> QuerySearchMovie(string query)
