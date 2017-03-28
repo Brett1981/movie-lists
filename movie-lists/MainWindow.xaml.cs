@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
@@ -33,43 +23,74 @@ namespace movie_lists
         public MainWindow()
         {
             InitializeComponent();
-            
+            tbInput.Focus();
         }
 
+        #region Event Handlers
+        // When the Search button is clicked, the movie search executes.
         void ButtonClick(object sender, RoutedEventArgs e)
         {
+            ExecuteMovieSearch();
+        }
+
+        // When the user hits the Enter key, the movie search executes.
+        void CheckEnterKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                ExecuteMovieSearch();
+        }
+        #endregion
+
+
+        // Runs a movie search on TMDb and displays the results using UI elements.
+        void ExecuteMovieSearch()
+        {
             resultsGrid.Children.Clear();
-            SearchContainer<SearchMovie> movies = QuerySearchMovie(tbQuery.Text);
+            SearchContainer<SearchMovie> movies = QuerySearchMovie(tbInput.Text);
             int count = 0;
-            foreach( SearchMovie mov in movies.Results)
+            foreach (SearchMovie mov in movies.Results)
             {
+                // if it doesn't even have a release date, probably not worth showing
+                if (mov.ReleaseDate == null)
+                    continue;
+
+                // create a stack panel to hold this movie's data
                 StackPanel sp = new StackPanel();
-                sp.Background = Brushes.Beige;
+                sp.Margin = new Thickness(10d);
+                sp.Width = 250d;
+                //sp.Background = Brushes.LightCyan;
                 resultsGrid.Children.Add(sp);
 
+                // place the title into the UI...
                 TextBlock title = new TextBlock();
                 title.Text = mov.Title;
                 title.FontSize = 20d;
                 title.TextWrapping = TextWrapping.Wrap;
                 sp.Children.Add(title);
 
+                // and then the release date...
                 Label rDate = new Label();
                 rDate.Content = mov.ReleaseDate;
-                rDate.FontSize = 10d;
+                rDate.FontSize = 12d;
                 sp.Children.Add(rDate);
 
+                // and finally the synopsis/overview
                 TextBlock overview = new TextBlock();
                 overview.Text = mov.Overview;
-                overview.Width = 200d;
                 overview.HorizontalAlignment = HorizontalAlignment.Left;
                 overview.TextWrapping = TextWrapping.Wrap;
-                overview.FontSize = 8d;
+                overview.FontSize = 10d;
                 sp.Children.Add(overview);
+
+                // i want to show posters directly fromthe search... but that's proving to be challenging/tedious
                 //Image poster = GetImageFromPath(mov.PosterPath);
                 //sp.Children.Add(poster);
 
-                count++;
+                count++; // # of displayed movies
+                tbInput.SelectAll(); // so user can immediately enter a new query
             }
+            
+            lbResultCount.Content = (count < 20) ? $"{count} entries found:" : $"Results cap reached! {count} entries found:";
             resultsGrid.Rows = 1 + count / 3;
             resultsGrid.Columns = 3;
         }

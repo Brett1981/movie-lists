@@ -5,25 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:movie_lists"
         mc:Ignorable="d"
-        Title="Movie Search" Height="700" Width= "900"
+        Title="Movie Database Search" Height="700" Width= "900"
         Padding="10">
-        <Grid>
+    <Grid Name="grMaster">
         <Grid.RowDefinitions>
-            <RowDefinition Height="70" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" x:Name="spMasterPanel">
-                <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" x:Name="lbQuery" Margin="10 0 0 0" Content="Enter query:" />
-                    <TextBox Grid.Column="1" x:Name="tbQuery" Margin="0 5 120 5"/>
-                </Grid>
-            <Button x:Name="btnSearch" Content="Search" Width="60" HorizontalAlignment="Left" Margin="15 5 0 0" Click="ButtonClick"/>
-        </StackPanel>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="15 5">
+        <Grid Name="grSearch" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" x:Name="lbQuery" Content="Enter query:" 
+                   Margin="10 0 0 0" FontSize="14"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbInput" KeyDown="CheckEnterKeyDown"
+                      Margin="0 5 120 5"/>
+            <Button Grid.Row="1" Grid.Column="0" x:Name="btnSearch" Content="Search" Width="60" HorizontalAlignment="Left" 
+                                        Margin="15 5" Click="ButtonClick"/>
+            <Label Grid.Row="1" Grid.Column="1" Name="lbResultCount" FontSize="16" Margin="5 0"/>
+        </Grid>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Auto" Margin="15 5">
             <UniformGrid  Name="resultsGrid">
             </UniformGrid>
         </ScrollViewer>
